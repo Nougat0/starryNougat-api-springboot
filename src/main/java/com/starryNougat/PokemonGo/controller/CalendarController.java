@@ -42,7 +42,7 @@ public class CalendarController {
     }
 
     @GetMapping("/pokemonPage/{pokemonName}")
-    public ResponseEntity<PMReleaseDates> getOnePokemon(@PathVariable("pokemonName") String pokemonName) throws IOException {
+    public ResponseEntity<List<PMReleaseDates>> getOnePokemon(@PathVariable("pokemonName") String pokemonName) throws IOException {
         return new ResponseEntity<>(service.getOnePokemon(pokemonName), HttpStatus.OK);
     }
 

@@ -4,6 +4,8 @@ public class PMReleaseDates {
 
     private String pokemonName;
 
+    private int pokedexNum;
+
     private String dt;
 
     private String shinyDt;
@@ -11,6 +13,14 @@ public class PMReleaseDates {
     private String shadowDt;
 
     public PMReleaseDates() {
+    }
+
+    public PMReleaseDates(String pokemonName, int pokedexNum, String dt, String shinyDt, String shadowDt) {
+        this.pokemonName = pokemonName;
+        this.pokedexNum = pokedexNum;
+        this.dt = dt;
+        this.shinyDt = shinyDt;
+        this.shadowDt = shadowDt;
     }
 
     public PMReleaseDates(String pokemonName, String dt, String shinyDt, String shadowDt) {
@@ -26,10 +36,20 @@ public class PMReleaseDates {
         this.shadowDt = shadowDt;
     }
 
+    public PMReleaseDates(String pokemonName, int pokedexNum) {
+        this.pokemonName = pokemonName;
+        this.pokedexNum = pokedexNum;
+    }
+
+    public PMReleaseDates(String pokemonName) {
+        this.pokemonName = pokemonName;
+    }
+
     @Override
     public String toString() {
         return "PMReleaseDates{" +
                 "pokemonName='" + pokemonName + '\'' +
+                ", pokedexNum=" + pokedexNum +
                 ", dt='" + dt + '\'' +
                 ", shinyDt='" + shinyDt + '\'' +
                 ", shadowDt='" + shadowDt + '\'' +
@@ -66,5 +86,13 @@ public class PMReleaseDates {
 
     public void setShadowDt(String shadowDt) {
         this.shadowDt = shadowDt;
+    }
+
+    public int getPokedexNum() {
+        return pokedexNum;
+    }
+
+    public void setPokedexNum(int pokedexNum) {
+        this.pokedexNum = pokedexNum;
     }
 }
