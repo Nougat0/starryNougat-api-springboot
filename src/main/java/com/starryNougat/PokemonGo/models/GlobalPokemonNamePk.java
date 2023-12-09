@@ -1,47 +1,55 @@
 package com.starryNougat.PokemonGo.models;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 
-@Entity
-@Table(name="global_pokemon_name")
-@IdClass(GlobalPokemonNamePk.class)
-public class GlobalPokemonName {
-    @Id
+import java.util.Objects;
+
+@Embeddable
+public class GlobalPokemonNamePk {
+
     @Column(name="LANGUAGE_SEQ")
     private int languageSeq;
-    @Id
+
     @Column(name="PM_POKEDEX_NUM")
     private int pmPokedexNum;
-    @Id
+
     @Column(name="REGION_SEQ")
     private int regionSeq;
-    @Id
+
     @Column(name="PM_FORM")
     private String pmForm;
 
-    @Column(name="PM_NM")
-    private String pmNm;
-
-    public GlobalPokemonName() {
+    public GlobalPokemonNamePk() {
     }
 
-    public GlobalPokemonName(int languageSeq, int pmPokedexNum, int regionSeq, String pmForm, String pmNm) {
+    public GlobalPokemonNamePk(int languageSeq, int pmPokedexNum, int regionSeq, String pmForm) {
         this.languageSeq = languageSeq;
         this.pmPokedexNum = pmPokedexNum;
         this.regionSeq = regionSeq;
         this.pmForm = pmForm;
-        this.pmNm = pmNm;
     }
 
     @Override
     public String toString() {
-        return "GlobalPokemonName{" +
+        return "GlobalPokemonNamePk{" +
                 "languageSeq=" + languageSeq +
                 ", pmPokedexNum=" + pmPokedexNum +
                 ", regionSeq=" + regionSeq +
                 ", pmForm='" + pmForm + '\'' +
-                ", pmNm='" + pmNm + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof GlobalPokemonNamePk that)) return false;
+        return getLanguageSeq() == that.getLanguageSeq() && getPmPokedexNum() == that.getPmPokedexNum() && getRegionSeq() == that.getRegionSeq() && Objects.equals(getPmForm(), that.getPmForm());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getLanguageSeq(), getPmPokedexNum(), getRegionSeq(), getPmForm());
     }
 
     public int getLanguageSeq() {
@@ -74,13 +82,5 @@ public class GlobalPokemonName {
 
     public void setPmForm(String pmForm) {
         this.pmForm = pmForm;
-    }
-
-    public String getPmNm() {
-        return pmNm;
-    }
-
-    public void setPmNm(String pmNm) {
-        this.pmNm = pmNm;
     }
 }
