@@ -33,41 +33,4 @@ public class CalendarController {
 
         return "하하하!"+yymm;
     }
-
-    @GetMapping("/pokemonReleaseDates")
-    public ResponseEntity<List<Pokemon>> getDates() throws IOException {
-        return new ResponseEntity<>(service.getDates(), HttpStatus.OK);
-    }
-
-    @GetMapping("/missingFrom/{siteName}")
-    public ResponseEntity<List<Integer>> getMissingFrom(@PathVariable("siteName") String siteName) throws IOException  {
-        return new ResponseEntity<>(service.getMissing(siteName), HttpStatus.OK);
-    }
-
-    @GetMapping("/pokemonEnNames")
-    public ResponseEntity<List<GlobalPokemonName>> getEnNames()  {
-        return new ResponseEntity<>(service.getEnNames(), HttpStatus.OK);
-    }
-
-    @GetMapping("/pokemonPage/{pokemonName}")
-    public ResponseEntity<List<Pokemon>> getOnePokemon(@PathVariable("pokemonName") String pokemonName) throws IOException {
-        return new ResponseEntity<>(service.getOnePokemon(pokemonName), HttpStatus.OK);
-    }
-
-    @GetMapping("/eventList/{year}")
-    public ResponseEntity<List<Event>> getEventListofYear(@PathVariable("year") int year) throws IOException{
-        return new ResponseEntity<>(service.getEventListofYear(year), HttpStatus.OK);
-    }
-
-    @GetMapping("/eventNameList/{year}")
-    public ResponseEntity<List<String>> getEventNamesofYear(@PathVariable("year") int year) throws IOException{
-        return new ResponseEntity<>(service.getEventNames(year), HttpStatus.OK);
-    }
-
-    @GetMapping("/pokemon/{pokemonName}")
-    public ResponseEntity<HashMap> getOtherForms(@PathVariable("pokemonName") String pokemonName) throws IOException {
-        return new ResponseEntity<>(service.getOtherForms(pokemonName), HttpStatus.OK);
-    }
-
-
 }
