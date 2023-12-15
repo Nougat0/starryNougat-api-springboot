@@ -2,6 +2,7 @@ package com.starryNougat.PokemonGo.models;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -24,13 +25,13 @@ public class Pokemon {
     private String pmUrl;
 
     @Column(name="PM_RELEASE_DT")
-    private Date pmReleaseDt;
+    private LocalDate pmReleaseDt;
 
     @Column(name="SHINY_RELEASE_DT")
-    private Date shinyReleaseDt;
+    private LocalDate shinyReleaseDt;
 
     @Column(name="SHADOW_RELEASE_DT")
-    private Date shadowReleaseDt;
+    private LocalDate shadowReleaseDt;
 
     @Column(name="PM_TYPE1")
     private String pmType1;
@@ -39,6 +40,24 @@ public class Pokemon {
     private String pmType2;
 
     public Pokemon() {
+    }
+
+    public Pokemon(int pmPokedexNum, String pmForm) {
+        this.pmPokedexNum = pmPokedexNum;
+        this.pmForm = pmForm;
+    }
+
+    public Pokemon(int pmPokedexNum, int regionSeq, String pmForm) {
+        this.pmPokedexNum = pmPokedexNum;
+        this.regionSeq = regionSeq;
+        this.pmForm = pmForm;
+    }
+
+    public Pokemon(int pmPokedexNum, String pmForm, String pmType1, String pmType2) {
+        this.pmPokedexNum = pmPokedexNum;
+        this.pmForm = pmForm;
+        this.pmType1 = pmType1;
+        this.pmType2 = pmType2;
     }
 
     public Pokemon(int pmPokedexNum, int regionSeq, String pmForm, String pmUrl, String pmType1, String pmType2) {
@@ -50,7 +69,7 @@ public class Pokemon {
         this.pmType2 = pmType2;
     }
 
-    public Pokemon(int pmPokedexNum, int regionSeq, String pmForm, String pmUrl, Date pmReleaseDt, Date shinyReleaseDt, Date shadowReleaseDt, String pmType1, String pmType2) {
+    public Pokemon(int pmPokedexNum, int regionSeq, String pmForm, String pmUrl, LocalDate pmReleaseDt, LocalDate shinyReleaseDt, LocalDate shadowReleaseDt, String pmType1, String pmType2) {
         this.pmPokedexNum = pmPokedexNum;
         this.regionSeq = regionSeq;
         this.pmForm = pmForm;
@@ -109,27 +128,27 @@ public class Pokemon {
         this.pmUrl = pmUrl;
     }
 
-    public Date getPmReleaseDt() {
+    public LocalDate getPmReleaseDt() {
         return pmReleaseDt;
     }
 
-    public void setPmReleaseDt(Date pmReleaseDt) {
+    public void setPmReleaseDt(LocalDate pmReleaseDt) {
         this.pmReleaseDt = pmReleaseDt;
     }
 
-    public Date getShinyReleaseDt() {
+    public LocalDate getShinyReleaseDt() {
         return shinyReleaseDt;
     }
 
-    public void setShinyReleaseDt(Date shinyReleaseDt) {
+    public void setShinyReleaseDt(LocalDate shinyReleaseDt) {
         this.shinyReleaseDt = shinyReleaseDt;
     }
 
-    public Date getShadowReleaseDt() {
+    public LocalDate getShadowReleaseDt() {
         return shadowReleaseDt;
     }
 
-    public void setShadowReleaseDt(Date shadowReleaseDt) {
+    public void setShadowReleaseDt(LocalDate shadowReleaseDt) {
         this.shadowReleaseDt = shadowReleaseDt;
     }
 
