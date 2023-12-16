@@ -171,13 +171,11 @@ public class PokemonService {
 
             //폼 정보가 type 정보보다 많을 경우, type의 첫번째 요소를 차이나는 개수만큼 채워넣기
             if(pmFormNo > pmTypeNo) {
-//                pmTypes.addAll(Collections.nCopies((pmFormNo - pmTypeNo), new Pokemon(pmTypes.get(0)))); //깊은 복사 아님
                 pmTypes.addAll(Stream.generate(()-> new Pokemon(pmTypes.get(0))).limit(pmFormNo - pmTypeNo).toList()); //깊은 복사
                 pmTypeNo = pmTypes.size(); //변경된 크기 다시 넣어주기
             } else if(pmFormNo < pmTypeNo) {
                 //만약 form 정보보다 type 정보가 많을 경우 (메가진화체가 여러종류 있을 경우)
                 //onePokemonInfos에 마지막 값을 다시 넣어준다.
-//                onePokemonInfos.addAll(Collections.nCopies((pmTypeNo - pmFormNo), new Pokemon(onePokemonInfos.get(pmFormNo - 11)))); //깊은 복사 아님
                 onePokemonInfos.addAll(Stream.generate(()-> new Pokemon(onePokemonInfos.get(pmFormNo - 1))).limit(pmTypeNo - pmFormNo).toList()); //깊은 복사
                 goForTypeName = true;
             }
