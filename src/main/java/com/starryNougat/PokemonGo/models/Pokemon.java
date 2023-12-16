@@ -42,6 +42,20 @@ public class Pokemon {
     public Pokemon() {
     }
 
+    public Pokemon(Pokemon that) {
+        //Pokemon 모델 clone하는 생성자, 전부 immutable 한 값들이라 깊은복사할 필요 X
+        this(that.getPmPokedexNum(),
+                that.getRegionSeq(),
+                that.getPmForm(),
+                that.getPmUrl(),
+                that.getPmReleaseDt(),
+                that.getShinyReleaseDt(),
+                that.getShadowReleaseDt(),
+                that.getPmType1(),
+                that.getPmType2());
+    }
+
+
     public Pokemon(int pmPokedexNum, String pmForm) {
         this.pmPokedexNum = pmPokedexNum;
         this.pmForm = pmForm;

@@ -21,6 +21,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 @Service
 public class PokemonService {
@@ -41,7 +42,8 @@ public class PokemonService {
         Alola("알로라"), //ordinal = 7
         Galar("가라르"), //ordinal = 8
         Hisui("히스이"), //ordinal = 9
-        Paldea("팔데아"); //ordinal = 10
+        Paldea("팔데아"), //ordinal = 10
+        Unknown("미분류"); //ordinal = 11
 
         private final String key;
 
@@ -163,23 +165,31 @@ public class PokemonService {
             List<Pokemon> pmTypes = getPokemonType(doc, pokedexNum);
             //포켓몬 폼별 타입정보 맵핑하기 - index 순서가 똑같다는 가정 하에
             int pmTypeNo = pmTypes.size();
-            for(int idx=0; idx<pmTypeNo; idx++) {
+            int pmFormNo = onePokemonInfos.size();
+
+            boolean goForTypeName = false;
+
+            //폼 정보가 type 정보보다 많을 경우, type의 첫번째 요소를 차이나는 개수만큼 채워넣기
+            if(pmFormNo > pmTypeNo) {
+//                pmTypes.addAll(Collections.nCopies((pmFormNo - pmTypeNo), new Pokemon(pmTypes.get(0)))); //깊은 복사 아님
+                pmTypes.addAll(Stream.generate(()-> new Pokemon(pmTypes.get(0))).limit(pmFormNo - pmTypeNo).toList()); //깊은 복사
+                pmTypeNo = pmTypes.size(); //변경된 크기 다시 넣어주기
+            } else if(pmFormNo < pmTypeNo) {
                 //만약 form 정보보다 type 정보가 많을 경우 (메가진화체가 여러종류 있을 경우)
-                if(idx+1 > onePokemonInfos.size()) {
-                    //onePokemonInfos에 마지막 값을 다시 넣어준다.
-                    onePokemonInfos.add(onePokemonInfos.get(idx-1));
-                }
-                //만약 form 정보보다 type 정보가 적을 경우
-                if(idx+1 < onePokemonInfos.size()) {
-                    //onePokemonInfos의 모든 종류에 첫번째 폼 정보를 넣어준다...
-                    //여기서 for문을 다시 돌려줘야 해???
-                    //for문으로 아래 코드들을 다 돌려줘야 함
-                }
+                //onePokemonInfos에 마지막 값을 다시 넣어준다.
+//                onePokemonInfos.addAll(Collections.nCopies((pmTypeNo - pmFormNo), new Pokemon(onePokemonInfos.get(pmFormNo - 11)))); //깊은 복사 아님
+                onePokemonInfos.addAll(Stream.generate(()-> new Pokemon(onePokemonInfos.get(pmFormNo - 1))).limit(pmTypeNo - pmFormNo).toList()); //깊은 복사
+                goForTypeName = true;
+            }
+
+            for(int idx=0; idx<pmTypeNo; idx++) {
                 Pokemon oneType = pmTypes.get(idx);
-                Pokemon onePokemon = onePokemonInfos.get(idx);
-                onePokemon.setPmType1(oneType.getPmType1());
-                onePokemon.setPmType2(oneType.getPmType2());
-                onePokemonInfos.set(idx, onePokemon);
+                Pokemon oneForm = onePokemonInfos.get(idx);
+                //메가진화 폼이라면 타입에서 가져온 이름 사용하기 (Genesect 같은 예외 때문에 if문 추가함)
+                if(oneForm.getPmForm().contains("Mega") || goForTypeName) oneForm.setPmForm(oneType.getPmForm());
+                oneForm.setPmType1(oneType.getPmType1());
+                oneForm.setPmType2(oneType.getPmType2());
+                //passed-by-reference 라서 다시 set 해줄 필요 X
             }
 
             return insertPokemon(onePokemonInfos);
@@ -212,7 +222,7 @@ public class PokemonService {
             //폼 종류 중 리전폼, 메가진화 걸러내기
             switch(pokemonFormName.split(" ")[0]) {
                 case "Mega":
-                    formName = "메가";
+                    formName = pokemonFormName.replace("Mega", "메가");
                     break;
                 case "Alolan":
                     formName = Region.Galar.getKey();
@@ -226,6 +236,9 @@ public class PokemonService {
                     formName = Region.Hisui.getKey();
                     regionNum = Region.Hisui.ordinal();
                     break;
+                case "Paldean":
+                    formName = Region.Paldea.getKey();
+                    regionNum = Region.Paldea.ordinal();
                 default:
                     if(!pokemonFormName.equals("Normal")) formName = pokemonFormName; //Normal 이 아닌 경우 전달된 폼 이름 넣기
                     regionNum = oneForm.getRegionSeq(); //가져온 리전 정보 그대로 넣어주기
