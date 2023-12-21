@@ -12,24 +12,15 @@ public class GlobalPokemonName {
     @Id
     @Column(name="PM_POKEDEX_NUM")
     private int pmPokedexNum;
-    @Id
-    @Column(name="REGION_SEQ")
-    private int regionSeq;
-    @Id
-    @Column(name="PM_FORM")
-    private String pmForm;
-
     @Column(name="PM_NM")
     private String pmNm;
 
     public GlobalPokemonName() {
     }
 
-    public GlobalPokemonName(int languageSeq, int pmPokedexNum, int regionSeq, String pmForm, String pmNm) {
+    public GlobalPokemonName(int languageSeq, int pmPokedexNum, String pmNm) {
         this.languageSeq = languageSeq;
         this.pmPokedexNum = pmPokedexNum;
-        this.regionSeq = regionSeq;
-        this.pmForm = pmForm;
         this.pmNm = pmNm;
     }
 
@@ -38,8 +29,6 @@ public class GlobalPokemonName {
         return "GlobalPokemonName{" +
                 "languageSeq=" + languageSeq +
                 ", pmPokedexNum=" + pmPokedexNum +
-                ", regionSeq=" + regionSeq +
-                ", pmForm='" + pmForm + '\'' +
                 ", pmNm='" + pmNm + '\'' +
                 '}';
     }
@@ -58,22 +47,6 @@ public class GlobalPokemonName {
 
     public void setPmPokedexNum(int pmPokedexNum) {
         this.pmPokedexNum = pmPokedexNum;
-    }
-
-    public int getRegionSeq() {
-        return regionSeq;
-    }
-
-    public void setRegionSeq(int regionSeq) {
-        this.regionSeq = regionSeq;
-    }
-
-    public String getPmForm() {
-        return pmForm;
-    }
-
-    public void setPmForm(String pmForm) {
-        this.pmForm = pmForm;
     }
 
     public String getPmNm() {

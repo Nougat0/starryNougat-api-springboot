@@ -14,20 +14,12 @@ public class GlobalPokemonNamePk {
     @Column(name="PM_POKEDEX_NUM")
     private int pmPokedexNum;
 
-    @Column(name="REGION_SEQ")
-    private int regionSeq;
-
-    @Column(name="PM_FORM")
-    private String pmForm;
-
     public GlobalPokemonNamePk() {
     }
 
-    public GlobalPokemonNamePk(int languageSeq, int pmPokedexNum, int regionSeq, String pmForm) {
+    public GlobalPokemonNamePk(int languageSeq, int pmPokedexNum) {
         this.languageSeq = languageSeq;
         this.pmPokedexNum = pmPokedexNum;
-        this.regionSeq = regionSeq;
-        this.pmForm = pmForm;
     }
 
     @Override
@@ -35,8 +27,6 @@ public class GlobalPokemonNamePk {
         return "GlobalPokemonNamePk{" +
                 "languageSeq=" + languageSeq +
                 ", pmPokedexNum=" + pmPokedexNum +
-                ", regionSeq=" + regionSeq +
-                ", pmForm='" + pmForm + '\'' +
                 '}';
     }
 
@@ -44,12 +34,12 @@ public class GlobalPokemonNamePk {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof GlobalPokemonNamePk that)) return false;
-        return getLanguageSeq() == that.getLanguageSeq() && getPmPokedexNum() == that.getPmPokedexNum() && getRegionSeq() == that.getRegionSeq() && Objects.equals(getPmForm(), that.getPmForm());
+        return getLanguageSeq() == that.getLanguageSeq() && getPmPokedexNum() == that.getPmPokedexNum();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getLanguageSeq(), getPmPokedexNum(), getRegionSeq(), getPmForm());
+        return Objects.hash(getLanguageSeq(), getPmPokedexNum());
     }
 
     public int getLanguageSeq() {
@@ -66,21 +56,5 @@ public class GlobalPokemonNamePk {
 
     public void setPmPokedexNum(int pmPokedexNum) {
         this.pmPokedexNum = pmPokedexNum;
-    }
-
-    public int getRegionSeq() {
-        return regionSeq;
-    }
-
-    public void setRegionSeq(int regionSeq) {
-        this.regionSeq = regionSeq;
-    }
-
-    public String getPmForm() {
-        return pmForm;
-    }
-
-    public void setPmForm(String pmForm) {
-        this.pmForm = pmForm;
     }
 }
